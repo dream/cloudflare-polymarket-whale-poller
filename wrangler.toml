@@ -11,3 +11,6 @@ id = "21885fb4d6944cdf82af114280147c6a"
 
 [secrets]
 required = [ "WHALE_ADDRESS", "NTFY_SH_TOPIC_NAME" ]
+
+[observability]
+enabled = true
