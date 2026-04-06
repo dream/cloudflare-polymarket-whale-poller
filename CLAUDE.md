@@ -16,8 +16,8 @@ TypeScript worker (`src/index.ts`) with a `scheduled` handler (Cron Trigger). Fl
 
 ## Environment Bindings
 
-- `env.WHALE_ADDRESS` — Polymarket user address to monitor
-- `env.NTFY_SH_TOPIC_NAME` — ntfy.sh topic for push notifications
+- `env.WHALE_ADDRESS` — (secret) Polymarket user address to monitor
+- `env.NTFY_SH_TOPIC_NAME` — (secret) ntfy.sh topic for push notifications
 - `env.KV_STORE` — Cloudflare KV namespace binding (stores `LAST_SUCCESS_TIMESTAMP`)
 
 ## Development
@@ -31,5 +31,5 @@ TypeScript worker (`src/index.ts`) with a `scheduled` handler (Cron Trigger). Fl
 
 - `src/index.ts` — main worker entry point
 - `test/index.spec.ts` — tests
-- `wrangler.toml` — Cloudflare Workers configuration (cron, KV, vars)
+- `wrangler.toml` — Cloudflare Workers configuration (cron, KV, secrets)
 - `worker-configuration.d.ts` — generated types for env bindings (committed, regenerate with `npm run cf-typegen`)

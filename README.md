@@ -37,12 +37,11 @@ binding = "KV_STORE"
 id = "<your-namespace-id>"
 ```
 
-Set your whale address and ntfy topic in `wrangler.toml`:
+Set your whale address and ntfy topic as secrets:
 
-```toml
-[vars]
-WHALE_ADDRESS = "0x..."
-NTFY_SH_TOPIC_NAME = "your-topic"
+```bash
+npx wrangler secret put WHALE_ADDRESS
+npx wrangler secret put NTFY_SH_TOPIC_NAME
 ```
 
 Generate TypeScript types from your bindings:
@@ -71,10 +70,10 @@ npm run deploy
 
 ## Configuration
 
-| Variable | Description |
-|---|---|
-| `WHALE_ADDRESS` | Polymarket user address to monitor |
-| `NTFY_SH_TOPIC_NAME` | ntfy.sh topic name for push notifications |
-| `KV_STORE` | Cloudflare KV namespace binding (stores `LAST_SUCCESS_TIMESTAMP`) |
+| Binding | Type | Description |
+|---|---|---|
+| `WHALE_ADDRESS` | Secret | Polymarket user address to monitor |
+| `NTFY_SH_TOPIC_NAME` | Secret | ntfy.sh topic name for push notifications |
+| `KV_STORE` | KV Namespace | Stores `LAST_SUCCESS_TIMESTAMP` cursor |
 
 The cron schedule is configured in `wrangler.toml` under `[triggers]`. Default: `* * * * *` (every minute).
