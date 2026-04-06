@@ -7,7 +7,7 @@ crons = ["* * * * *"]
 
 [[kv_namespaces]]
 binding = "KV_STORE"
-id = "<YOUR_KV_NAMESPACE_ID>"
+id = "21885fb4d6944cdf82af114280147c6a"
 
 [vars]
 WHALE_ADDRESS = "<YOUR_WHALE_ADDRESS>"
