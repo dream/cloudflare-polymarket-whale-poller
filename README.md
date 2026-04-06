@@ -77,3 +77,4 @@ The cron schedule is configured in `wrangler.toml` under `[triggers]`. Default: 
 
 ## Todos
 - Add quality tests (see: https://developers.cloudflare.com/workers/testing/vitest-integration/)
+- Adjust design to allow for multiple whales
