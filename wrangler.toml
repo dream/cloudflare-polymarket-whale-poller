@@ -9,6 +9,5 @@ crons = ["* * * * *"]
 binding = "KV_STORE"
 id = "21885fb4d6944cdf82af114280147c6a"
 
-[vars]
-WHALE_ADDRESS = "<YOUR_WHALE_ADDRESS>"
-NTFY_SH_TOPIC_NAME = "<YOUR_NTFY_TOPIC>"
+[secrets]
+required = [ "WHALE_ADDRESS", "NTFY_SH_TOPIC_NAME" ]

@@ -31,7 +31,6 @@ npx wrangler kv namespace create KV_STORE
 ```
 
 Copy the KV namespace ID from the output and update `wrangler.toml`:
-
 ```toml
 [[kv_namespaces]]
 binding = "KV_STORE"
