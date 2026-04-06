@@ -30,6 +30,5 @@ TypeScript worker (`src/index.ts`) with a `scheduled` handler (Cron Trigger). Fl
 ## Project Structure
 
 - `src/index.ts` — main worker entry point
-- `test/index.spec.ts` — tests
 - `wrangler.toml` — Cloudflare Workers configuration (cron, KV, secrets)
 - `worker-configuration.d.ts` — generated types for env bindings (committed, regenerate with `npm run cf-typegen`)

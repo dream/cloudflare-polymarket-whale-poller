@@ -57,10 +57,7 @@ npm run dev
 ```
 
 ## Testing
-
-```bash
-npm test
-```
+Not yet implemented
 
 ## Deployment
 
