@@ -45,7 +45,7 @@ npx wrangler secret put NTFY_SH_TOPIC_NAME
 ```
 
 Generate TypeScript types from your bindings:
-
+asd
 ```bash
 npm run cf-typegen
 ```
@@ -74,3 +74,6 @@ npm run deploy
 | `KV_STORE` | KV Namespace | Stores `LAST_SUCCESS_TIMESTAMP` cursor |
 
 The cron schedule is configured in `wrangler.toml` under `[triggers]`. Default: `* * * * *` (every minute).
+
+## Todos
+- Add quality tests (see: https://developers.cloudflare.com/workers/testing/vitest-integration/)
