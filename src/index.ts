@@ -1,29 +1,40 @@
+interface Activity {
+  side: string;
+  asset: string;
+  size: string;
+  price: string;
+  timestamp: number;
+}
+
 export default {
-  async scheduled(event, env, ctx) {
+  async scheduled(
+    _controller: ScheduledController,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<void> {
     ctx.waitUntil(handleSchedule(env));
   },
-};
+} satisfies ExportedHandler<Env>;
 
-async function handleSchedule(env) {
+export async function handleSchedule(env: Env): Promise<void> {
   const user = env.WHALE_ADDRESS;
   const kvKey = "LAST_SUCCESS_TIMESTAMP";
   const topic = env.NTFY_SH_TOPIC_NAME;
 
-  // 1. Get the last recorded timestamp from KV
+  // Get the last recorded timestamp from KV
   let lastTimestamp = await env.KV_STORE.get(kvKey);
 
   console.log(`Last success timestamp = ${lastTimestamp}`);
 
   // If no timestamp exists (first run), start from 1 hour ago
   if (!lastTimestamp) {
-    lastTimestamp = Math.floor(Date.now() / 1000) - 3600;
+    lastTimestamp = String(Math.floor(Date.now() / 1000) - 3600);
     console.log(
       `No timestamp was found, setting timestamp to 1 hour ago. ${lastTimestamp}`,
     );
   }
 
-  // 2. Fetch new activity from Polymarket
-  // We use start = lastTimestamp + 1 to avoid duplicates
+  // Fetch new activity from Polymarket (start = lastTimestamp + 1 to avoid duplicates)
   const url = `https://data-api.polymarket.com/activity?user=${user}&start=${parseInt(lastTimestamp) + 1}&sortBy=TIMESTAMP&sortDirection=ASC&limit=20`;
 
   try {
@@ -36,20 +47,20 @@ async function handleSchedule(env) {
       return;
     }
 
-    const activities = await response.json();
+    const activities: Activity[] = await response.json();
 
     if (activities.length === 0) {
       console.log("No new activity found.");
       return;
     }
 
-    // 3. Process the activities
+    // Send notifications for each activity
     for (const activity of activities) {
       await notify(activity, topic);
     }
 
-    // 4. Update the cursor to the timestamp of the latest event
-    const newestTimestamp = activities[activities.length - 1].timestamp;
+    // Update the cursor to the timestamp of the latest event
+    const newestTimestamp = activities[activities.length - 1]!.timestamp;
     await env.KV_STORE.put(kvKey, newestTimestamp.toString());
 
     console.log(
@@ -60,7 +71,7 @@ async function handleSchedule(env) {
   }
 }
 
-async function notify(activity, topic) {
+export async function notify(activity: Activity, topic: string): Promise<void> {
   const url = `https://ntfy.sh/${topic}`;
 
   const message =

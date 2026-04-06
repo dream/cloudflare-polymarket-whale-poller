@@ -8,7 +8,7 @@ Cloudflare Worker that polls the Polymarket activity API for a specific whale ad
 
 ## Architecture
 
-Single-file worker (`worker.js`) with a `scheduled` handler (Cron Trigger). Flow:
+TypeScript worker (`src/index.ts`) with a `scheduled` handler (Cron Trigger). Flow:
 1. Read last-seen timestamp from KV (`KV_STORE`)
 2. Fetch new activity from `data-api.polymarket.com/activity` for the configured whale address
 3. Send a notification per activity via ntfy.sh POST
@@ -22,6 +22,14 @@ Single-file worker (`worker.js`) with a `scheduled` handler (Cron Trigger). Flow
 
 ## Development
 
-Deploy and manage with Wrangler (`npx wrangler`). There is no `wrangler.toml` checked in yet — one is needed to configure the cron schedule, KV namespace binding, and environment variables.
+- `npm run dev` — start local dev server via Wrangler
+- `npm run deploy` — deploy to Cloudflare
+- `npm test` — run tests with Vitest (uses `@cloudflare/vitest-pool-workers` to run in Workers runtime)
+- `npm run cf-typegen` — regenerate `worker-configuration.d.ts` from `wrangler.toml` bindings (run after changing wrangler.toml)
 
-No build step, tests, or dependencies — the worker is plain JS using only the Cloudflare Workers runtime APIs and `fetch`.
+## Project Structure
+
+- `src/index.ts` — main worker entry point
+- `test/index.spec.ts` — tests
+- `wrangler.toml` — Cloudflare Workers configuration (cron, KV, vars)
+- `worker-configuration.d.ts` — generated types for env bindings (committed, regenerate with `npm run cf-typegen`)
